@@ -27,7 +27,7 @@ var getFirstLine = function(table, text, width) {
 // Find a nice font size for a text given a containing width.
 var getNiceSize = function (font, width, text, size) {
   var line = getFirstLine(getTable(font, size), text, width);
-  if (line.length > 50 && line.length < 75) return size;
+  if (line.length > 60 && line.length < 75) return size;
   if (text.length < 10)                     return size;
   if (size < 11 || size > 72) return size;
   return getNiceSize(font, width, text, line.length > 75 ? size + 0.5 : size - 0.5);
