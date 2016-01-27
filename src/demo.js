@@ -7,7 +7,7 @@ var div = document.querySelector(".text-container");
 div.textContent = str;
 
 var resize = function () {
-  div.style.fontSize = mb.getNiceSize("Georgia", div.clientWidth, str, 72);
+  div.style.fontSize = mb.getNiceSize("Georgia", div.clientWidth, str, 71);
   window.requestAnimationFrame(resize);
 };
 
