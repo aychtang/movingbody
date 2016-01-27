@@ -13,7 +13,7 @@ The current implementation is very simple, we first generate and cache any requi
 * If we did, is it possible to determine what of the given sizes is the best?
 
 ## Run this code
-There is an ```index.html``` file at the root of this git repository which runs the bundled demo javascript. As you resize the browser window, the text size should adjust to maintain a good type mesaure at all times.
+There is an ```index.html``` file at the root of this git repository which runs the bundled demo javascript. As you resize the browser window, the text size should adjust to maintain a good type measure at all times.
 
 If you want to build the source code, you can do so by browserifying ```src/index.js```.
 
