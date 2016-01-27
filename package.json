@@ -1,0 +1,10 @@
+{
+  "name": "movingbody",
+  "version": "1.0.2",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aychtang/movingbody.git"
+  },
+  "license": "MIT"
+}
