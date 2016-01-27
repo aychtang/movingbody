@@ -39,7 +39,7 @@ var getNiceSize = function (f, w, txt, s) {
   var line = getFirstLine(getTable(f, s), txt, w);
 
   // If it is a short string, do nothing.
-  if (text.length < 10)                         return s;
+  if (txt.length < 10)                          return s;
   // Inclusively clamp output size to 10 and 72.
   if (s <= 10 || s >= 72)                       return s;
   // If we have reached an appropriate size, return it.

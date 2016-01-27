@@ -18,36 +18,51 @@ window.requestAnimationFrame(resize);
 var st         = require("sizetables");
 var tableCache = {};
 
-var generateTable = function (font, size) {
-  return st.calculateSizeTable( size + "px " + font, st.defaultCharSet() );
+// Generates a sizetable for the given font family and size.
+// generateTable :: String -> Number -> SizeTable
+var generateTable = function (f, s) {
+  return st.calculateSizeTable(s + "px " + f, st.defaultCharSet());
 };
 
 // Also ensures there is a table added in cache if required.
-var getTable = function (font, size) {
-  if (!tableCache[font])
-    tableCache[font] = {};
+// getTable :: String -> Number -> SizeTable
+var getTable = function (f, s) {
+  if (!tableCache[f])
+    tableCache[f] = {};
 
-  if (!tableCache[font][size])
-    tableCache[font][size] = generateTable(font, size);
+  if (!tableCache[f][s])
+    tableCache[f][s] = generateTable(f, s);
 
-  return tableCache[font][size];
+  return tableCache[f][s];
 };
 
-var getFirstLine = function(table, text, width) {
-  var words   = text.split(" ");
+// Estimate what the first line of copy would be from given text.
+// getFirstLine :: SizeTable -> String -> Number -> String
+var getFirstLine = function (t, txt, w) {
+  var words   = txt.split(" ");
   var current = "";
-  while (st.measureText(current, table) < width && words.length)
+
+  // Keep adding words until the first line overflows.
+  while (st.measureText(current, t) < w && words.length)
     current += words.shift() + " ";
+
   return current;
 };
 
 // Find a nice font size for a text given a containing width.
-var getNiceSize = function (font, width, text, size) {
-  var line = getFirstLine(getTable(font, size), text, width);
-  if (line.length - 1 > 60 && line.length < 75) return size;
-  if (text.length < 10)                         return size;
-  if (size <= 10 || size >= 72)                 return size;
-  return getNiceSize(font, width, text, line.length > 75 ? size + 0.5 : size - 0.5);
+// Params: font family, container width, body text, candidate font size.
+// getNiceSize :: String -> Number -> String -> Number -> Number
+var getNiceSize = function (f, w, txt, s) {
+  var line = getFirstLine(getTable(f, s), txt, w);
+
+  // If it is a short string, do nothing.
+  if (txt.length < 10)                          return s;
+  // Inclusively clamp output size to 10 and 72.
+  if (s <= 10 || s >= 72)                       return s;
+  // If we have reached an appropriate size, return it.
+  if (line.length - 1 > 60 && line.length < 75) return s;
+
+  return getNiceSize(f, w, txt, line.length > 75 ? s + 0.5 : s - 0.5);
 };
 
 exports.getNiceSize = getNiceSize;
