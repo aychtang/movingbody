@@ -2,12 +2,16 @@ var mb = require("./index");
 
 // Muh demo.
 
-var str = "The font property of the Canvas 2D API specifies the current text style being used when drawing text. This string uses the same syntax as the CSS font specifier. The default font is 10px sans-serif.";
-var div = document.querySelector(".text-container");
-div.textContent = str;
+var div       = document.querySelector(".text-container");
+var str       = div.textContent;
+var prevWidth = div.clientWidth + 1;
 
 var resize = function () {
-  div.style.fontSize = mb.getNiceSize("Georgia", div.clientWidth, str, 71);
+  var width = div.clientWidth;
+  if (width !== prevWidth) {
+    div.style.fontSize = mb.getNiceSize("Georgia", width, str, 71);
+    prevWidth = width;
+  }
   window.requestAnimationFrame(resize);
 };
 
